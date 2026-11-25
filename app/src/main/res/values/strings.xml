@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kindle助手</string>
+    <string name="gallery_title">收到的图片</string>
+    <string name="service_on">接收服务：运行中</string>
+    <string name="service_off">接收服务：已停止</string>
+    <string name="start_service">启动接收服务</string>
+    <string name="stop_service">停止接收服务</string>
+    <string name="button_photo">图片\n接收与查看</string>
+    <string name="button_todo">待办事项\n清单与计时</string>
+    <string name="qr_hint">扫码打开手机端：上传图片 / 管理待办</string>
+    <string name="permission_needed">需要存储权限才能把图片保存到「图片」文件夹</string>
+    <string name="empty_gallery">还没有收到图片</string>
+    <string name="viewer_hint">点击图片显示旋转按钮 · 左右滑动切换 · 边缘滑动返回</string>
+    <string name="rotate_button">旋转 90°</string>
+    <string name="storage_hint">图片保存在：内部存储/Pictures</string>
+    <string name="upload_channel">Kindle助手接收服务</string>
+    <string name="notification_title">Kindle助手 · 正在接收</string>
+
+    <string name="todo_title">待办事项</string>
+    <string name="todo_pending">未完成</string>
+    <string name="todo_done">已完成</string>
+    <string name="todo_deleted">已删除</string>
+    <string name="todo_empty">这个分类暂时没有待办</string>
+    <string name="todo_finish">完成</string>
+    <string name="todo_restore">恢复</string>
+    <string name="todo_more">⋯</string>
+    <string name="todo_delete_permanent">彻底删除</string>
+    <string name="tab_count">%1$s (%2$d)</string>
+    <string name="add">添加</string>
+    <string name="edit">修改</string>
+    <string name="delete">删除</string>
+    <string name="save">保存</string>
+
+    <string name="timer_duration">倒计时时长</string>
+    <string name="timer_selected">当前：%1$d 分钟</string>
+    <string name="timer_start">开始</string>
+    <string name="timer_resume">继续</string>
+    <string name="timer_pause">暂停</string>
+    <string name="timer_end">结束</string>
+    <string name="timer_back">返回待办</string>
+    <string name="timer_result">本次耗时：%1$s　累计耗时：%2$s</string>
+
+    <string name="calendar_title">电子台历</string>
+    <string name="button_calendar">电子台历\n日历与天气</string>
+    <string name="calendar_prev">‹ 前一天</string>
+    <string name="calendar_next">后一天 ›</string>
+    <string name="calendar_today">回到今天</string>
+    <string name="calendar_city">城市：%1$s（点击切换）</string>
+    <string name="calendar_refresh">刷新</string>
+    <string name="calendar_forecast_today">未来一周天气</string>
+    <string name="calendar_forecast_day">当日天气</string>
+    <string name="calendar_no_weather">该日期暂无天气预报</string>
+    <string name="calendar_weather_loading">正在获取天气…</string>
+    <string name="calendar_weather_error">天气获取失败，请检查网络后点「刷新」</string>
+    <string name="calendar_input_city">输入城市名称</string>
+    <string name="calendar_city_candidates">候选城市（点击选择）</string>
+    <string name="calendar_city_no_match">没有匹配的城市</string>
+    <string name="calendar_searching">正在查询城市…</string>
+    <string name="calendar_city_not_found">没有找到这个城市</string>
+    <string name="calendar_attribution">天气数据：Open-Meteo</string>
+</resources>

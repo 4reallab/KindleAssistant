@@ -1,0 +1,30 @@
+# 本地配置与签名凭据（含密码与私钥，绝不入库）
+local.properties
+*.jks
+*.keystore
+app/keystore/
+
+# Gradle / 构建缓存与产物
+.gradle/
+.gradle-home/
+build/
+app/build/
+.gradle-home/
+**/build/
+
+# 本地 Gradle 发行包与 Android SDK（体积大，不入库）
+gradle/gradle-*/
+gradle/*.zip
+android-sdk/
+
+# JVM / IDE
+*.iml
+.idea/
+*.class
+.DS_Store
+
+# 临时验证数据、截图与备份
+.test/
+*.log
+*.tmp
+*.bak
