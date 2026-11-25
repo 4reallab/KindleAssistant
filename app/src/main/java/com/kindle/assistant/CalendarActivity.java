@@ -2,6 +2,7 @@ package com.kindle.assistant;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,6 +63,9 @@ public class CalendarActivity extends Activity {
     private GregorianCalendar shown;
     private JSONObject forecast;
     private String cityName = "";
+
+    /** MCP 需要刷新正在显示的台历页面。 */
+    private static volatile CalendarActivity mcpInstance;
 
     private final SimpleDateFormat keyFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.CHINA);
@@ -146,6 +150,7 @@ public class CalendarActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        mcpInstance = this;
         GregorianCalendar newToday = startOfDay(new GregorianCalendar(CHINA));
         if (!sameDay(newToday, today)) {
             today = newToday;
@@ -163,6 +168,7 @@ public class CalendarActivity extends Activity {
 
     @Override
     protected void onPause() {
+        mcpInstance = null;
         handler.removeCallbacks(clockTicker);
         handler.removeCallbacks(weatherTicker);
         super.onPause();
@@ -477,6 +483,46 @@ public class CalendarActivity extends Activity {
     private void updateCityButton() {
         String name = cityName.isEmpty() ? getString(R.string.calendar_input_city) : cityName;
         cityButton.setText(getString(R.string.calendar_city, name));
+    }
+
+    // ---- MCP 接口：设置城市 / 强制刷新天气 ----
+
+    static boolean mcpSetCity(Context context, String city, double latitude, double longitude) {
+        if (Double.isNaN(latitude) || Double.isNaN(longitude)) {
+            return false;
+        }
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
+                .putString(KEY_CITY, city)
+                .putLong(KEY_LAT, Double.doubleToLongBits(latitude))
+                .putLong(KEY_LON, Double.doubleToLongBits(longitude))
+                .apply();
+        CalendarActivity current = mcpInstance;
+        if (current != null) {
+            current.runOnUiThread(() -> {
+                CalendarActivity activity = mcpInstance;
+                if (activity == null) {
+                    return;
+                }
+                activity.cityName = city;
+                activity.updateCityButton();
+                activity.loadWeather(true);
+            });
+        }
+        return true;
+    }
+
+    static boolean mcpRefresh() {
+        CalendarActivity current = mcpInstance;
+        if (current == null) {
+            return false;
+        }
+        current.runOnUiThread(() -> {
+            CalendarActivity activity = mcpInstance;
+            if (activity != null) {
+                activity.loadWeather(true);
+            }
+        });
+        return true;
     }
 
     private static GregorianCalendar startOfDay(GregorianCalendar source) {

@@ -192,7 +192,10 @@ public class UploadService extends Service {
             }
 
             if ("GET".equals(method) && ("/".equals(path) || "/index.html".equals(path))) {
-                respond(out, 200, "text/html; charset=utf-8", WebPages.portal());
+                respond(out, 200, "text/html; charset=utf-8", WebPages.portal(url));
+            } else if ("GET".equals(method)
+                    && ("/ai.html".equals(path) || "/ai".equals(path))) {
+                respond(out, 200, "text/html; charset=utf-8", WebPages.aiGuide(url));
             } else if ("GET".equals(method)
                     && ("/upload.html".equals(path) || "/photos".equals(path))) {
                 respond(out, 200, "text/html; charset=utf-8", UPLOAD_PAGE);
@@ -204,6 +207,13 @@ public class UploadService extends Service {
                         "running=" + running + "\nurl=" + url
                                 + "\nimages=" + ImageStore.listImages().size()
                                 + "\ntodos=" + TodoStore.count(this));
+            } else if ("POST".equals(method)
+                    && ("/mcp".equals(path) || "/mcp/".equals(path))) {
+                handleMcp(in, out, headers);
+            } else if ("GET".equals(method) && ("/mcp".equals(path) || "/mcp/".equals(path))) {
+                respond(out, 405, "application/json; charset=utf-8",
+                        "{\"error\":\"MCP endpoint requires POST\"}",
+                        "Allow: POST\r\n");
             } else if ("POST".equals(method) && "/upload".equals(path)) {
                 handleUpload(in, out, headers);
             } else if ("POST".equals(method) && path.startsWith("/todo/")) {
@@ -220,6 +230,38 @@ public class UploadService extends Service {
                 client.close();
             } catch (IOException ignored) {
             }
+        }
+    }
+
+    /** MCP Streamable HTTP：POST 单个 JSON-RPC 请求，返回单个 JSON 响应。 */
+    private void handleMcp(InputStream in, OutputStream out, Map<String, String> headers)
+            throws IOException {
+        int length;
+        try {
+            length = Integer.parseInt(headers.get("content-length"));
+        } catch (Exception e) {
+            respond(out, 411, "application/json; charset=utf-8",
+                    "{\"error\":\"Content-Length required\"}");
+            return;
+        }
+        if (length <= 0 || length > McpServer.MAX_BODY) {
+            respond(out, 413, "application/json; charset=utf-8",
+                    "{\"error\":\"MCP body too large\"}");
+            return;
+        }
+        if (!McpServer.authorized(this, headers)) {
+            respond(out, 401, "application/json; charset=utf-8",
+                    "{\"error\":\"Invalid or missing Bearer token\"}",
+                    "WWW-Authenticate: Bearer\r\n");
+            return;
+        }
+        String body = new String(readFully(in, length), UTF8);
+        String response = McpServer.handle(this, body);
+        if (response == null) {
+            respond(out, 202, "application/json; charset=utf-8", "");
+        } else {
+            respond(out, 200, "application/json; charset=utf-8", response,
+                    "MCP-Protocol-Version: " + McpServer.PROTOCOL + "\r\n");
         }
     }
 
@@ -427,12 +469,18 @@ public class UploadService extends Service {
     }
 
     private static void respond(OutputStream out, int code, String contentType, String body) throws IOException {
+        respond(out, code, contentType, body, "");
+    }
+
+    private static void respond(OutputStream out, int code, String contentType, String body,
+                                String extraHeaders) throws IOException {
         byte[] bytes = body.getBytes(UTF8);
         String status = code == 200 ? "OK" : "Error";
         String header = "HTTP/1.1 " + code + " " + status + "\r\n"
                 + "Content-Type: " + contentType + "\r\n"
                 + "Content-Length: " + bytes.length + "\r\n"
                 + "Cache-Control: no-store\r\n"
+                + extraHeaders
                 + "Connection: close\r\n\r\n";
         out.write(header.getBytes(ASCII));
         out.write(bytes);

@@ -214,6 +214,51 @@ final class ImageStore {
         return result;
     }
 
+    /** MCP 删除图片：只允许删本应用管理的图片目录，优先走 MediaStore。 */
+    static boolean delete(Context context, String path) {
+        if (path == null || path.isEmpty()) {
+            return false;
+        }
+        File file = new File(path);
+        if (!file.isAbsolute()) {
+            return false;
+        }
+        String absolute = file.getAbsolutePath();
+        String managedDir = getPicturesDir(context).getAbsolutePath();
+        boolean managed = absolute.startsWith(managedDir + File.separator);
+        File fallback = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (fallback != null) {
+            managed = managed || absolute.startsWith(fallback.getAbsolutePath() + File.separator);
+        }
+        if (!managed) {
+            return false;
+        }
+        Cursor cursor = null;
+        try {
+            cursor = context.getContentResolver().query(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    new String[]{MediaStore.Images.Media._ID},
+                    MediaStore.Images.Media.DATA + "=?",
+                    new String[]{absolute}, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int column = cursor.getColumnIndex(MediaStore.Images.Media._ID);
+                if (column >= 0) {
+                    long id = cursor.getLong(column);
+                    Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon()
+                            .appendEncodedPath(String.valueOf(id)).build();
+                    return context.getContentResolver().delete(uri, null, null) > 0;
+                }
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "MediaStore delete failed: " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return file.delete();
+    }
+
     private static void addImages(List<String> out, File dir, boolean requirePrefix) {
         File[] files = dir.listFiles();
         if (files == null) {

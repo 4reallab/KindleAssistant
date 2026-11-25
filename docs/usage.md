@@ -93,6 +93,12 @@ D:\Android\android-sdk\platform-tools\adb.exe install -r app\build\outputs\apk\r
 - 每次唤醒（回到）台历页都会刷新天气；若一直停留在前台，则每小时自动刷新一次。「刷新」按钮可随时手动获取。
 - 天气结果缓存作离线兜底；设备需连接可访问互联网的 Wi-Fi。
 
+## AI 助手接口（MCP）
+
+Kindle 助手内置 MCP（Model Context Protocol）服务，AI 助手可读取全部数据并通过工具写入。服务与手机网页共用同一个局域网 HTTP 端口 8088，端点为 `POST http://<Kindle-IP>:8088/mcp`。支持读取待办、图片、计时器、台历与天气缓存，也可增删改待办、上传/删除图片、控制计时器、切换台历城市。
+
+默认局域网内免认证；可用 `mcp_set_token` 工具设置 Bearer token。在手机或电脑浏览器打开 Kindle 主页，点「AI 助手操作指南」进入 `/ai.html`，页面给出本机实际 MCP 地址、可一键复制的添加指令、启用/信任步骤和示例指令（推荐 WorkBuddy 直接发指令添加；豆包需用豆包工作版手动添加）。完整协议说明、工具清单、客户端配置与安全建议见 [docs/mcp.md](mcp.md)。
+
 ## 其他
 
 - 图片库按接收时间倒序排列；应用不会自动删除已接收文件。

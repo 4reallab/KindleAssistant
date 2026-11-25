@@ -1,6 +1,8 @@
 package com.kindle.assistant;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -53,6 +57,9 @@ public class TimerActivity extends Activity {
     private boolean running;
     private boolean finished;
     private boolean clearStateOnExit;
+
+    /** MCP 从同一个进程读取/控制当前计时页面。 */
+    private static volatile TimerActivity mcpInstance;
 
     /** 界面（时钟与沙漏）对齐整分钟刷新，不再显示秒。 */
     private final Runnable displayTicker = new Runnable() {
@@ -140,6 +147,9 @@ public class TimerActivity extends Activity {
         updateButtons();
         updateClock();
         handler.post(displayTicker);
+        if (getIntent().getBooleanExtra("autoStart", false) && !finished) {
+            startOrResume();
+        }
     }
 
     /** 再次进入时恢复上次退出时的暂停状态，不自动继续倒计时；只恢复同一条待办。 */
@@ -233,6 +243,7 @@ public class TimerActivity extends Activity {
 
     @Override
     protected void onPause() {
+        mcpInstance = null;
         savePausedState();
         super.onPause();
     }
@@ -240,6 +251,7 @@ public class TimerActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        mcpInstance = this;
         updateButtons();
         updateHourglass();
     }
@@ -305,6 +317,139 @@ public class TimerActivity extends Activity {
     @Override
     protected void onDestroy() {
         handler.removeCallbacksAndMessages(null);
+        if (mcpInstance == this) {
+            mcpInstance = null;
+        }
         super.onDestroy();
+    }
+
+    // ---- MCP 接口：读取实时状态 + 开始/暂停/继续/结束 ----
+
+    static JSONObject mcpSnapshot(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(TIMER_PREFS, Context.MODE_PRIVATE);
+        boolean active = prefs.getBoolean(KEY_ACTIVE, false);
+        long id = prefs.getLong(KEY_ID, -1);
+        long total = prefs.getLong(KEY_TOTAL, 0);
+        long remaining = prefs.getLong(KEY_REMAINING, 0);
+        boolean running = false;
+        String source = "saved";
+        TimerActivity current = mcpInstance;
+        if (current != null) {
+            source = "live";
+            active = current.started && !current.finished;
+            running = current.running && !current.finished;
+            id = current.todoId;
+            total = current.totalMillis;
+            remaining = running
+                    ? Math.max(0, current.deadline - SystemClock.elapsedRealtime())
+                    : current.remainingMillis;
+        }
+        JSONObject result = new JSONObject();
+        try {
+            result.put("active", active);
+            result.put("running", running);
+            result.put("source", source);
+            result.put("todoId", id);
+            result.put("totalMillis", total);
+            result.put("remainingMillis", remaining);
+            result.put("elapsedMillis", Math.max(0, total - remaining));
+            result.put("remainingMinutes", (remaining + 59_999) / 60_000);
+        } catch (Exception ignored) {
+        }
+        return result;
+    }
+
+    static void mcpStart(Context context, long todoId, int minutes) {
+        long total = minutes * 60_000L;
+        context.getSharedPreferences(TIMER_PREFS, Context.MODE_PRIVATE).edit()
+                .putBoolean(KEY_ACTIVE, true)
+                .putLong(KEY_ID, todoId)
+                .putLong(KEY_TOTAL, total)
+                .putLong(KEY_REMAINING, total)
+                .apply();
+        TodoStore.Todo todo = todoId > 0 ? TodoStore.get(todoId) : null;
+        String title = todo == null ? "待办计时" : todo.title;
+        Intent intent = new Intent(context, TimerActivity.class)
+                .putExtra("id", todoId)
+                .putExtra("title", title)
+                .putExtra("autoStart", true)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+    }
+
+    static boolean mcpPause() {
+        TimerActivity current = mcpInstance;
+        if (current == null) {
+            return false;
+        }
+        current.runOnUiThread(() -> {
+            TimerActivity activity = mcpInstance;
+            if (activity == null || !activity.running || activity.finished) {
+                return;
+            }
+            activity.remainingMillis = Math.max(0, activity.deadline - SystemClock.elapsedRealtime());
+            activity.running = false;
+            activity.handler.removeCallbacks(activity.finishRunnable);
+            activity.updateButtons();
+            activity.savePausedState();
+        });
+        return true;
+    }
+
+    static boolean mcpResume(Context context) {
+        TimerActivity current = mcpInstance;
+        if (current != null) {
+            current.runOnUiThread(() -> {
+                TimerActivity activity = mcpInstance;
+                if (activity != null && !activity.finished) {
+                    activity.startOrResume();
+                }
+            });
+            return true;
+        }
+        SharedPreferences prefs = context.getSharedPreferences(TIMER_PREFS, Context.MODE_PRIVATE);
+        if (!prefs.getBoolean(KEY_ACTIVE, false)) {
+            return false;
+        }
+        long id = prefs.getLong(KEY_ID, -1);
+        long remaining = prefs.getLong(KEY_REMAINING, 0);
+        if (remaining <= 0) {
+            return false;
+        }
+        TodoStore.Todo todo = id > 0 ? TodoStore.get(id) : null;
+        String title = todo == null ? "待办计时" : todo.title;
+        Intent intent = new Intent(context, TimerActivity.class)
+                .putExtra("id", id)
+                .putExtra("title", title)
+                .putExtra("autoStart", true)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+        return true;
+    }
+
+    static boolean mcpStop(Context context) {
+        TimerActivity current = mcpInstance;
+        if (current != null) {
+            current.runOnUiThread(() -> {
+                TimerActivity activity = mcpInstance;
+                if (activity != null && !activity.finished) {
+                    activity.finishTimer();
+                }
+            });
+            return true;
+        }
+        SharedPreferences prefs = context.getSharedPreferences(TIMER_PREFS, Context.MODE_PRIVATE);
+        if (!prefs.getBoolean(KEY_ACTIVE, false)) {
+            return false;
+        }
+        long id = prefs.getLong(KEY_ID, -1);
+        long total = prefs.getLong(KEY_TOTAL, 0);
+        long remaining = prefs.getLong(KEY_REMAINING, 0);
+        long elapsed = Math.max(0, total - remaining);
+        if (id > 0 && elapsed > 0) {
+            TodoStore.addElapsed(context, id, elapsed);
+        }
+        prefs.edit().clear().apply();
+        return true;
     }
 }

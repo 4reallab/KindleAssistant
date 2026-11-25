@@ -35,6 +35,13 @@ Use it on the Kindle, or open the same address in a browser on your phone, compu
 - Today's weather appears to the left of the date/time area; the coming week shows 7 days from tomorrow in a horizontal row that fits one screen
 - Searchable and saved city (candidates from Photon / OpenStreetMap), weather from Open-Meteo — an internet connection is required
 
+### 5. An MCP endpoint for AI assistants
+- Uses the same LAN port 8088: `POST http://<Kindle-IP>:8088/mcp`
+- 8 Resources expose all data (to-dos, images, timer, calendar, weather cache, service status)
+- 18 Tools write data: edit to-dos, upload/delete images, control the timer, switch city; optional Bearer token
+- Open "AI Assistant Guide" from the web home page to copy the setup instruction with the device's actual IP; WorkBuddy can add the server by chat instruction, Doubao requires the desktop "Doubao Work" edition and manual setup
+- Protocol details and client setup: [docs/mcp.md](docs/mcp.md)
+
 ## Device requirements
 
 | Item | Requirement |
