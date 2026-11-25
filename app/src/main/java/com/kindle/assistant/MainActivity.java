@@ -88,6 +88,8 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(this, TodoActivity.class)));
         findViewById(R.id.calendarButton).setOnClickListener(v ->
                 startActivity(new Intent(this, CalendarActivity.class)));
+        findViewById(R.id.aboutButton).setOnClickListener(v ->
+                startActivity(new Intent(this, AboutActivity.class)));
 
         requestNeededPermissions();
         updateUi();

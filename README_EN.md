@@ -96,7 +96,9 @@ signing.keyPassword=...
 
 Environment variables: `SIGNING_STORE_FILE` / `SIGNING_STORE_PASSWORD` / `SIGNING_KEY_ALIAS` / `SIGNING_KEY_PASSWORD`.
 
-See [`docs/usage.md`](docs/usage.md) for the full Chinese user manual. The project homepage, promotional site and download link are available on the [4reallab/KindleAssistant](https://github.com/4reallab/KindleAssistant) repository page.
+See [`docs/usage.md`](docs/usage.md) for the full Chinese user manual. The [project homepage](https://4reallab.github.io/KindleAssistant/) (GitHub Pages, source in [`docs/index.html`](docs/index.html)) has the promotional site and download link; source code is at [github.com/4reallab/KindleAssistant](https://github.com/4reallab/KindleAssistant).
+
+Tap **About** on the app's home screen to read the license, terms, disclaimer, source URL and credits — the same text as below.
 
 ## Credits
 

@@ -95,6 +95,22 @@
                 android:textIsSelectable="true"
                 android:textSize="16sp"
                 android:typeface="monospace" />
+
+            <Button
+                android:id="@+id/aboutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/big_button"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:text="@string/button_about"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <ImageView

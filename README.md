@@ -96,7 +96,9 @@ signing.keyPassword=...
 
 环境变量形式：`SIGNING_STORE_FILE` / `SIGNING_STORE_PASSWORD` / `SIGNING_KEY_ALIAS` / `SIGNING_KEY_PASSWORD`。
 
-完整的中文使用说明见 [`docs/usage.md`](docs/usage.md)。项目宣传页与下载地址见 [4reallab/KindleAssistant](https://github.com/4reallab/KindleAssistant) 仓库首页。
+完整的中文使用说明见 [`docs/usage.md`](docs/usage.md)。项目宣传页与下载地址见 [项目主页](https://4reallab.github.io/KindleAssistant/)（GitHub Pages，源码在 [`docs/index.html`](docs/index.html)）；开源地址 [github.com/4reallab/KindleAssistant](https://github.com/4reallab/KindleAssistant)。
+
+APP 主界面点「关于」可查看授权、使用协议、免责条款、开源地址与致谢，内容与下方一致。
 
 ## 致谢
 

@@ -58,6 +58,11 @@
             android:exported="false"
             android:label="@string/calendar_title" />
 
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false"
+            android:label="@string/about_title" />
+
         <service
             android:name=".UploadService"
             android:exported="false" />
