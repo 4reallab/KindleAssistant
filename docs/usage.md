@@ -24,7 +24,7 @@ Gradle 发行包、依赖缓存、SDK 都在项目目录内：
 构建脚本使用 Android Studio 自带 JBR（JDK 21）。本机 GraalVM 17 的 `jlink` 缺少 AGP 需要的模块，命令行构建时需同样指定：
 `JAVA_HOME="D:\Program Files\Android\Android Studio\jbr"`。
 
-Android Studio 可直接打开 `G:\Projects\kindle\photo-drop`。
+Android Studio 可直接打开仓库根目录（本机的工程目录为 `G:\Projects\kindle\KindleAssistant`）。
 
 ## 安装与桌面图标
 

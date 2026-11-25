@@ -99,7 +99,7 @@ public class UploadService extends Service {
             pool = Executors.newCachedThreadPool();
             startForeground(NOTIFICATION_ID, buildNotification(url));
             foreground = true;
-            new Thread(this::acceptLoop, "photo-drop-http").start();
+            new Thread(this::acceptLoop, "kindle-assistant-http").start();
         }
     }
 
