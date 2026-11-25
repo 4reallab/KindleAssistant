@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Icon;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -90,6 +91,9 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(this, CalendarActivity.class)));
         findViewById(R.id.aboutButton).setOnClickListener(v ->
                 startActivity(new Intent(this, AboutActivity.class)));
+        findViewById(R.id.websiteLink).setOnClickListener(v ->
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(getString(R.string.about_website_url)))));
 
         requestNeededPermissions();
         updateUi();

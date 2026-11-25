@@ -98,7 +98,7 @@ signing.keyPassword=...
 
 完整的中文使用说明见 [`docs/usage.md`](docs/usage.md)。项目宣传页与下载地址见 [项目主页](https://4reallab.github.io/KindleAssistant/)（GitHub Pages，源码在 [`docs/index.html`](docs/index.html)）；开源地址 [github.com/4reallab/KindleAssistant](https://github.com/4reallab/KindleAssistant)。
 
-APP 主界面点「关于」可查看授权、使用协议、免责条款、开源地址与致谢，内容与下方一致。
+APP 主界面标题行右侧有「官网」链接与「关于」按钮；点「关于」可查看官网、授权、使用协议、免责条款、开源地址与致谢，内容与下方一致。
 
 ## 致谢
 
@@ -116,6 +116,6 @@ Copyright (c) 2026 4reallab
 
 未经作者书面授权，禁止用于任何商业目的，包括但不限于：销售、付费服务、企业内部生产使用、SaaS、为客户开发项目。商业使用请联系作者获取单独授权。
 
-本软件按「现状」提供，不提供任何担保。本软件未经充分测试，使用即表示接受可能对设备造成损害的风险。
+本软件按「现状」提供，不提供任何担保。本软件未经充分测试，使用则表示接受可能对设备造成损害的风险，本软件开发者不会提供任何形式赔偿。
 
 联系方式：forreallab@126.com（问题反馈、商业授权咨询）。

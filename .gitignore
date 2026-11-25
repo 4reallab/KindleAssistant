@@ -23,7 +23,8 @@ android-sdk/
 *.class
 .DS_Store
 
-# 临时验证数据、截图与备份
+# 本地工作记忆与临时验证数据、截图与备份
+.workbuddy/
 .test/
 *.log
 *.tmp

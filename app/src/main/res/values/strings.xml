@@ -61,15 +61,18 @@
     <string name="calendar_attribution">天气数据：Open-Meteo</string>
 
     <string name="button_about">关于</string>
+    <string name="website">官网</string>
     <string name="back">返回</string>
     <string name="about_title">关于 Kindle助手</string>
+    <string name="about_website_title">官网</string>
+    <string name="about_website_url">https://4reallab.github.io/KindleAssistant/</string>
     <string name="about_version">v1.0 · 为电子墨水屏而做</string>
     <string name="about_license_title">授权</string>
     <string name="about_license_body">Copyright (c) 2026 4reallab\n本软件仅供个人学习、研究、非商业用途免费使用。\n未经作者书面授权，禁止用于任何商业目的，包括但不限于：销售、付费服务、企业内部生产使用、SaaS、为客户开发项目。\n商业使用请联系作者获取单独授权。</string>
     <string name="about_terms_title">使用协议</string>
     <string name="about_terms_body">本软件免费提供，使用者应自行判断是否符合上述授权范围。\n问题反馈、商业授权咨询，请来信 forreallab@126.com。</string>
     <string name="about_disclaimer_title">免责条款</string>
-    <string name="about_disclaimer_body">本软件按“现状”提供，不提供任何担保。\n本软件未经充分测试，使用则表示接受可能对设备造成损害的风险。</string>
+    <string name="about_disclaimer_body">本软件按“现状”提供，不提供任何担保。\n本软件未经充分测试，使用则表示接受可能对设备造成损害的风险，本软件开发者不会提供任何形式赔偿。</string>
     <string name="about_source_title">开源项目地址</string>
     <string name="about_source_url">https://github.com/4reallab/KindleAssistant</string>
     <string name="about_credits">致谢：Kindle助手运行在 Readom 之上，感谢小蹦大侠@Bilibili 开源 Readom（https://github.com/hbyxabc/readom）。</string>

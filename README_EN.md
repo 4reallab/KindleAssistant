@@ -98,7 +98,7 @@ Environment variables: `SIGNING_STORE_FILE` / `SIGNING_STORE_PASSWORD` / `SIGNIN
 
 See [`docs/usage.md`](docs/usage.md) for the full Chinese user manual. The [project homepage](https://4reallab.github.io/KindleAssistant/) (GitHub Pages, source in [`docs/index.html`](docs/index.html)) has the promotional site and download link; source code is at [github.com/4reallab/KindleAssistant](https://github.com/4reallab/KindleAssistant).
 
-Tap **About** on the app's home screen to read the license, terms, disclaimer, source URL and credits — the same text as below.
+The app's home screen has a **Website** link and an **About** button on the title row. Tap **About** to read the website, license, terms, disclaimer, source URL and credits — the same text as below.
 
 ## Credits
 
@@ -116,6 +116,6 @@ This software is free for personal study, research and non-commercial use only.
 
 Commercial use of any kind — including but not limited to resale, paid services, internal corporate production use, SaaS, or developing projects for clients — is prohibited without the author's written authorization. For commercial licensing, please contact the author.
 
-This software is provided "as is", without warranty of any kind. It has not been thoroughly tested; by using it you accept the risk of possible damage to your device.
+This software is provided "as is", without warranty of any kind. It has not been thoroughly tested; by using it you accept the risk of possible damage to your device, and the developer will not provide any form of compensation.
 
 Contact: forreallab@126.com (bug reports and commercial licensing enquiries).
