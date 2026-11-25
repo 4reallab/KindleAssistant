@@ -69,11 +69,11 @@ final class WebPages {
                 .append("text-align:center;background:#111;color:#fff;border-radius:50%;font-style:normal;")
                 .append("font-size:14px;margin-right:8px}")
                 .append(".card p{font-size:14px;line-height:1.7;margin:8px 0;color:#374151}")
-                .append(".box{position:relative;margin:10px 0}")
-                .append("textarea{width:100%;min-height:76px;padding:12px 12px 40px;")
-                .append("border:1px solid #b8bec6;border-radius:10px;font-size:14px;line-height:1.6;")
-                .append("color:#111;background:#fafbfc;resize:vertical;word-break:break-all}")
-                .append("button.copy{position:absolute;right:8px;bottom:8px;padding:7px 12px;")
+                .append(".box{margin:10px 0}")
+                .append(".cmd{width:100%;padding:12px;border:1px solid #b8bec6;border-radius:10px;")
+                .append("font-size:14px;line-height:1.6;color:#111;background:#fafbfc;")
+                .append("word-break:break-word;overflow-wrap:break-word;white-space:pre-wrap}")
+                .append("button.copy{display:block;margin:8px 0 0 auto;padding:7px 12px;")
                 .append("border:1px solid #111;border-radius:8px;background:#111;color:#fff;")
                 .append("font-size:13px;font-weight:600;cursor:pointer}")
                 .append(".tag{display:inline-block;padding:2px 8px;border-radius:6px;background:#eef1f4;")
@@ -100,9 +100,9 @@ final class WebPages {
                 .append("<p><span class=\"tag\">推荐 · WorkBuddy</span>"
                         + "复制下面整段指令，发给电脑端 WorkBuddy，它会自动写入配置（不覆盖已有服务器），"
                         + "并告诉你下一步怎么启用或信任。</p>")
-                .append("<div class=\"box\"><textarea id=\"addCmd\" readonly>")
+                .append("<div class=\"box\"><div class=\"cmd\" id=\"addCmd\">")
                 .append(escapeHtml(addInstruction))
-                .append("</textarea><button class=\"copy\" onclick=\"copyText('addCmd',this)\">复制指令</button></div>")
+                .append("</div><button class=\"copy\" onclick=\"copyText('addCmd',this)\">复制指令</button></div>")
                 .append("<p><span class=\"tag\">豆包用户</span>"
                         + "普通豆包 App 不支持 MCP，请用<b>豆包工作版</b>（桌面端）并<b>手动添加</b>："
                         + "在设置里找到 MCP 服务器管理，点添加，选择「Streamable HTTP」，"
@@ -153,7 +153,7 @@ final class WebPages {
                 .append("t.select();try{ok=document.execCommand('copy');}catch(e){}document.body.removeChild(t);}")
                 .append("var old=btn.textContent;btn.textContent=ok?'已复制 ✓':'请手动复制';")
                 .append("setTimeout(function(){btn.textContent=old;},1800);}")
-                .append("function copyText(id,btn){doCopy(document.getElementById(id).value,btn);}")
+                .append("function copyText(id,btn){doCopy(document.getElementById(id).textContent,btn);}")
                 .append("function copyExample(btn){doCopy(btn.parentNode.querySelector('span').textContent,btn);}")
                 .append("</script></div></body></html>");
         return h.toString();
