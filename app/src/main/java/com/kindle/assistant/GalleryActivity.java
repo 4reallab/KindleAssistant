@@ -1,4 +1,4 @@
-package com.kindle.photodrop;
+package com.kindle.assistant;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;

@@ -99,7 +99,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <com.kindle.photodrop.HourglassView
+    <com.kindle.assistant.HourglassView
         android:id="@+id/hourglass"
         android:layout_width="match_parent"
         android:layout_height="0dp"

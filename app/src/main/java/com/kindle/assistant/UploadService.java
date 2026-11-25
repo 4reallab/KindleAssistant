@@ -1,4 +1,4 @@
-package com.kindle.photodrop;
+package com.kindle.assistant;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -37,10 +37,10 @@ import java.util.regex.Pattern;
 /** 前台服务：在局域网内提供 HTTP 上传页面，收到文件后写入图片目录并自动打开。 */
 public class UploadService extends Service {
 
-    public static final String ACTION_START = "com.kindle.photodrop.START";
-    public static final String ACTION_STOP = "com.kindle.photodrop.STOP";
-    public static final String ACTION_STATUS = "com.kindle.photodrop.STATUS";
-    public static final String BROADCAST_IMAGE = "com.kindle.photodrop.IMAGE_RECEIVED";
+    public static final String ACTION_START = "com.kindle.assistant.START";
+    public static final String ACTION_STOP = "com.kindle.assistant.STOP";
+    public static final String ACTION_STATUS = "com.kindle.assistant.STATUS";
+    public static final String BROADCAST_IMAGE = "com.kindle.assistant.IMAGE_RECEIVED";
     public static final int PORT = 8088;
 
     private static final String TAG = "PhotoDrop";

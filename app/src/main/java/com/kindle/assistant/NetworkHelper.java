@@ -1,4 +1,4 @@
-package com.kindle.photodrop;
+package com.kindle.assistant;
 
 import android.content.Context;
 import android.net.wifi.WifiManager;

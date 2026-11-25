@@ -1,4 +1,4 @@
-package com.kindle.photodrop;
+package com.kindle.assistant;
 
 import android.Manifest;
 import android.app.Activity;

@@ -128,7 +128,7 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <com.kindle.photodrop.WeatherIconView
+                    <com.kindle.assistant.WeatherIconView
                         android:id="@+id/todayWeatherIcon"
                         android:layout_width="@dimen/weather_icon_size"
                         android:layout_height="@dimen/weather_icon_size" />

@@ -64,7 +64,7 @@ adb install -r KindleAssistant.apk
 
 ## 从源码构建
 
-Android 工程位于本仓库根目录，包名 `com.kindle.photodrop`，`minSdk 27` / `targetSdk 27` / `compileSdk 34`。
+Android 工程位于本仓库根目录，包名 `com.kindle.assistant`，`minSdk 27` / `targetSdk 27` / `compileSdk 34`。
 
 ```bat
 scripts\build.bat

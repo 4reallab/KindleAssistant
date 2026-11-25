@@ -1,4 +1,4 @@
-package com.kindle.photodrop;
+package com.kindle.assistant;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -25,6 +25,7 @@ import java.util.Locale;
 /** 负责把收到的文件永久写入公共「图片」目录，并列出已保存的图片。 */
 final class ImageStore {
 
+    // 目录名保持不变：这是公共相册里已有的用户图片目录，改名会导致旧图片从图库消失。
     static final String SUBDIR = "KindlePhotoDrop";
     static final String PREFIX = "KindleDrop_";
     private static final String TAG = "PhotoDrop";

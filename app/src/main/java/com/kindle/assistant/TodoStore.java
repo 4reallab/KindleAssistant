@@ -1,4 +1,4 @@
-package com.kindle.photodrop;
+package com.kindle.assistant;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +27,7 @@ final class TodoStore {
     static final int PENDING = 0;
     static final int DONE = 1;
     static final int DELETED = 2;
-    static final String ACTION_CHANGED = "com.kindle.photodrop.TODO_CHANGED";
+    static final String ACTION_CHANGED = "com.kindle.assistant.TODO_CHANGED";
 
     private static final Charset UTF8 = Charset.forName("UTF-8");
     private static final String FILE_NAME = "todos.json";

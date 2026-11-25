@@ -64,7 +64,7 @@ After installation, connect your phone, computer or tablet to the same Wi-Fi as 
 
 ## Building from source
 
-The Android project is at the repository root, package `com.kindle.photodrop`, `minSdk 27` / `targetSdk 27` / `compileSdk 34`.
+The Android project is at the repository root, package `com.kindle.assistant`, `minSdk 27` / `targetSdk 27` / `compileSdk 34`.
 
 ```bat
 scripts\build.bat

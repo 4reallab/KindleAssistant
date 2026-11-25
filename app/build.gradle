@@ -3,11 +3,12 @@ plugins {
 }
 
 android {
-    namespace 'com.kindle.photodrop'
+    namespace 'com.kindle.assistant'
     compileSdk 34
 
     defaultConfig {
-        applicationId 'com.kindle.photodrop'
+        // 迁移用途：用 -PmigrationAppId 临时覆盖安装标识（namespace 不动，组件类名照旧）。
+        applicationId project.findProperty('migrationAppId') ?: 'com.kindle.assistant'
         minSdk 27
         targetSdk 27
         versionCode 1
@@ -42,6 +43,8 @@ android {
 
     buildTypes {
         release {
+            // 迁移用途：-PmigrationDebug 时打开 debuggable，便于 run-as 读写私有数据。
+            debuggable project.hasProperty('migrationDebug')
             signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

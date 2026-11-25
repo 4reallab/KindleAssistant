@@ -1,4 +1,4 @@
-package com.kindle.photodrop;
+package com.kindle.assistant;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
